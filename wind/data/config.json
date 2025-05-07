@@ -1,0 +1,20 @@
+{
+    "numbers_range": [0, 100],
+    "common_numbers": [123, 1234, 12345],
+    "years_range": [1990, 2025],
+    "special_chars": ["!", "@", "#", "$", "%", "&", "*", "_"],
+    "leet_map": {
+      "a": ["4"],
+      "e": ["3"],
+      "i": ["1"],
+      "o": ["0"],
+      "s": ["5"],
+      "t": ["7"]
+    },
+    "passwd_patterns": [
+      "{name}{number}",
+      "{name}{symbol}{number}",
+      "{name}{symbol}{keyword}",
+      "{name}{symbol}{surname}"
+    ]
+}
