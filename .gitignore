@@ -10,9 +10,6 @@ dist/
 
 # Editor & IDE configs
 .vscode/
-.idea/
-*.sublime-project
-*.sublime-workspace
 
 # Test
-run.py
+test.py

@@ -50,14 +50,11 @@ def build_parser():
         "-l", "--leet", action="store_true", help="Use leet transformations (l1k3 7h1s)"
     )
     wordlist.add_argument(
-        "-u", "--upper", action="store_true", help="UPPERCASE the words"
-    )
-    wordlist.add_argument(
-        "-c", "--capitalize", action="store_true", help="Capitalize words (Like This)"
+        "-c", "--case", action="store_true", help="Apply case transformations"
     )
     wordlist.add_argument("-o", "--output", help="Output file name")
 
-    meta = parser.add_argument_group("Help & Version")
+    meta = parser.add_argument_group("Information")
     meta.add_argument("-h", "--help", action="help", help="Show this help menu")
     meta.add_argument(
         "-v",
@@ -87,8 +84,7 @@ def main():
     options = {
         "leet": args.leet,
         "special": args.special,
-        "upper": args.upper,
-        "capitalize": args.capitalize,
+        "case": args.case,
         "min_length": args.min_length,
         "max_length": args.max_length,
         "output": args.output,

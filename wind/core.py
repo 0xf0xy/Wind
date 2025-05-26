@@ -24,8 +24,12 @@ SOFTWARE.
 
 from importlib.resources import files
 from itertools import product
-from rich import print
 import json
+
+RED = "\033[1;31m"
+GREEN = "\033[1;32m"
+BLUE = "\033[1;34m"
+RESET = "\033[0m"
 
 
 class Wind:
@@ -72,27 +76,6 @@ class Wind:
 
         return [birth[:2], birth[2:4], birth[:4], birth[-4:], birth]
 
-    @staticmethod
-    def apply_case_variations(word: str, upper: bool, capitalize: bool) -> set[str]:
-        """
-        Apply case variations to a word based on options.
-
-        Args:
-            word (str): The input word.
-            upper (bool): Whether to add the uppercase version.
-            capitalize (bool): Whether to add the capitalized version.
-
-        Returns:
-            set[str]: Set containing all case variations.
-        """
-        variations = {word}
-        if upper:
-            variations.add(word.upper())
-        if capitalize:
-            variations.add(word.capitalize())
-
-        return variations
-
     def apply_leet(self, word: str) -> set[str]:
         """
         Generate leetspeak variations of a word based on the configured leet map.
@@ -123,8 +106,7 @@ class Wind:
         max_len: int,
         leet: bool,
         special: bool,
-        upper: bool,
-        capitalize: bool,
+        case_variation: bool,
     ) -> set[str]:
         """
         Generate password combinations based on defined patterns.
@@ -136,8 +118,7 @@ class Wind:
             max_len (int): Maximum password length.
             leet (bool): Apply leetspeak transformations.
             special (bool): Include special characters.
-            upper (bool): Include uppercase variations.
-            capitalize (bool): Include capitalized variations.
+            case_variation (bool): Include capitalized and uppercase variations.
 
         Returns:
             set[str]: Set of generated password combinations.
@@ -173,8 +154,14 @@ class Wind:
             )
 
             if min_len <= len(result) <= max_len:
-                for variation in self.apply_case_variations(result, upper, capitalize):
+                variations = {result}
+
+                if case_variation:
+                    variations.update([result.upper(), result.capitalize()])
+
+                for variation in variations:
                     combos.add(variation)
+
                     if leet:
                         combos.update(self.apply_leet(variation))
 
@@ -208,7 +195,7 @@ class Wind:
             or [""],
         }
 
-        print("[bold blue]*[/bold blue] Generating wordlist\n")
+        print(f"{BLUE}*{RESET} Generating wordlist\n")
 
         wordlist = self.generate_passwds(
             words=words,
@@ -217,19 +204,21 @@ class Wind:
             max_len=options.get("max_length") or options.get("min_length"),
             leet=options.get("leet"),
             special=options.get("special"),
-            upper=options.get("upper"),
-            capitalize=options.get("capitalize"),
+            case_variation=options.get("case"),
         )
 
         output = f"{options.get("output") or data.get("name")}.txt"
 
-        with open(output, "w") as f:
-            for word in sorted(wordlist):
-                f.write(f"{word}\n")
+        if len(wordlist) == 0:
+            print(f"{RED}-{RESET} No passwords generated.")
+            print(f"{RED}-{RESET} Please check your input data.")
 
-            print(
-                f"[bold green]+[/bold green] Total words generated: [bold green]{len(wordlist)}[/bold green]"
-            )
-            print(
-                f"[bold green]+[/bold green] Wordlist saved as: [bold green]{output}[/bold green]"
-            )
+        else:
+            with open(output, "w") as f:
+                for word in sorted(wordlist):
+                    f.write(f"{word}\n")
+
+                print(
+                    f"{GREEN}+{RESET} Total words generated: {GREEN}{len(wordlist)}{RESET}"
+                )
+                print(f"{GREEN}+{RESET} Wordlist saved as: {GREEN}{output}{RESET}")

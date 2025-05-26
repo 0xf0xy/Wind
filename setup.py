@@ -8,7 +8,6 @@ setup(
     package_data={
         "wind.data": ["config.json"],
     },
-    install_requires=["rich"],
     entry_points={
         "console_scripts": [
             "wind=wind.cli:main",
