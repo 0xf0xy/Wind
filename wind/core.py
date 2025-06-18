@@ -210,8 +210,8 @@ class Wind:
         output = f"{options.get("output") or data.get("name")}.txt"
 
         if len(wordlist) == 0:
-            print(f"{RED}-{RESET} No passwords generated.")
-            print(f"{RED}-{RESET} Please check your input data.")
+            print(f"{RED}x{RESET} No passwords generated.")
+            print(f"{RED}x{RESET} Please check your input data.")
 
         else:
             with open(output, "w") as f:
