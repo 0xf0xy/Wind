@@ -23,7 +23,7 @@
 ```bash
 git clone https://github.com/0xf0xy/Wind.git
 cd Wind
-pip install .
+sudo pip install .
 wind -h
 ```
 
