@@ -71,8 +71,6 @@ def main():
     parser = build_parser()
     args = parser.parse_args()
 
-    wind = Wind()
-
     data = {
         "name": args.name,
         "surname": args.surname,
@@ -90,4 +88,5 @@ def main():
         "output": args.output,
     }
 
+    wind = Wind()
     wind.generate_wordlist(data, options)
