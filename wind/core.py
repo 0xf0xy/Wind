@@ -25,6 +25,7 @@ SOFTWARE.
 from importlib.resources import files
 from itertools import product
 import json
+import os
 
 RED = "\033[1;31m"
 GREEN = "\033[1;32m"
@@ -184,6 +185,11 @@ class Wind:
         Returns:
             list[str]: Sorted list of generated passwords.
         """
+        os.system("clear")
+
+        print(f"Generating wordlist based on input data...")
+        print("─" * 50, "\n")
+
         words = {
             "name": data.get("name"),
             "surname": (data.get("surname") or ""),
@@ -194,8 +200,6 @@ class Wind:
             ]
             or [""],
         }
-
-        print(f"{BLUE}*{RESET} Generating wordlist\n")
 
         wordlist = self.generate_passwds(
             words=words,
@@ -210,15 +214,15 @@ class Wind:
         output = f"{options.get("output") or data.get("name")}.txt"
 
         if len(wordlist) == 0:
-            print(f"{RED}x{RESET} No passwords generated.")
-            print(f"{RED}x{RESET} Please check your input data.")
+            print(
+                f"    [{RED}x{RESET}] No passwords generated. Please check your input data."
+            )
 
         else:
             with open(output, "w") as f:
                 for word in sorted(wordlist):
                     f.write(f"{word}\n")
 
-                print(
-                    f"{GREEN}+{RESET} Total words generated: {GREEN}{len(wordlist)}{RESET}"
-                )
-                print(f"{GREEN}+{RESET} Wordlist saved as: {GREEN}{output}{RESET}")
+                print(f"[{GREEN}✓{RESET}] Wordlist generation complete!\n")
+                print(f"    Output file   : {BLUE}{output}{RESET}")
+                print(f"    Words total   : {BLUE}{len(wordlist)}{RESET}\n")
