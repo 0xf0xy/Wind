@@ -1,20 +1,26 @@
-<h1 align="center">🌬️ Wind</h1>
-<p align="center"><em>Pattern-based password wordlist generator</em></p>
+<h1 align="center">WIND</h1>
+<p align="center"><em>pattern-based wordlist generator</em></p>
 
 <p align="center">
-  <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.10+-3776AB?style=flat&logo=python&logoColor=white"/></a>
-  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-3DA639?style=flat&logo=OpenSourceInitiative&logoColor=white"/></a>
+  <a href="https://www.python.org/"><img src="https://img.shields.io/badge/python-3.10+-3776AB?style=flat&logo=python&logoColor=white"/></a> <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-3DA639?style=flat"/></a>
 </p>
 
 <br>
 
-## 🧠 What is Wind?
+## > About
 
-**Wind** is a wordlist generator designed to exploit common password patterns, making it ideal for **dictionary attacks** and **realistic brute-force scenarios**.
+**Wind** is a wordlist generator focused on exploiting common password patterns.
+
+It was built to:
+- generate realistic password candidates
+- support dictionary and brute-force attacks
+- adapt to user-defined patterns
+
+Built to mirror how people actually choose passwords.
 
 <br>
 
-## ⚙️ Installation
+## > Install
 
 ```bash
 git clone https://github.com/0xf0xy/Wind.git
@@ -25,15 +31,15 @@ wind -h
 
 <br>
 
-## 🔐 Legal Disclaimer
+## > Warning
 
-This tool is intended for **educational and research purposes only**.  
-Do **NOT** use it on networks or systems without explicit permission.
+This project is provided for **educational and research purposes only**.  
+Any misuse is your responsibility.
 
 <br>
 
 ___
 <p align="center">
-  🦊 Made by <a href="https://github.com/0xf0xy" target="_blank"><b>0xf0xy</b></a> • 
-  Licensed under <a href="./LICENSE"><b>MIT</b></a>
+  <a href="https://github.com/0xf0xy" target="_blank"><b>0xf0xy</b></a> • 
+  <a href="./LICENSE"><b>MIT</b></a>
 </p>
