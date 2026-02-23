@@ -23,7 +23,7 @@ Built to support dictionary-based attacks, controlled brute-force strategies, an
 
 <br>
 
-## > Install
+## > Installation
 
 ```bash
 git clone https://github.com/0xf0xy/Wind.git
