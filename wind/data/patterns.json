@@ -1,0 +1,9 @@
+{
+    "patterns": [
+        "{word}{number}",
+        "{word}{symbol}{number}",
+        "{word}{symbol}{word}",
+        "{word}{number}{symbol}",
+        "{word}{symbol}{word}{number}"
+    ]
+}
