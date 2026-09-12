@@ -1,16 +1,15 @@
-from importlib.resources import files
-from pathlib import Path
-from collections.abc import Generator, Iterable
 import json
+import re
 import sqlite3
 import tempfile
-import re
+from collections.abc import Generator, Iterable
+from importlib.resources import files
+from pathlib import Path
 
 from .models import GenerationOptions, GenerationResult, ProgressCallback
 
 
 class Wind:
-    """Wordlist generation engine."""
 
     DEFAULT_NUMBERS_RANGE = (0, 100)
     DEFAULT_YEARS_RANGE = (1990, 2025)
@@ -46,11 +45,6 @@ class Wind:
 
     @staticmethod
     def _load_patterns() -> list[str]:
-        """
-        Load password patterns from patterns.json.
-
-        The configuration file contains only password patterns.
-        """
         config_path = files("wind.data").joinpath("patterns.json")
 
         with config_path.open("r", encoding="utf-8") as file:
@@ -68,21 +62,6 @@ class Wind:
 
     @staticmethod
     def normalize_words(words: Iterable[str] | str | None) -> list[str]:
-        """
-        Normalize the word input.
-
-        Accepts:
-
-            ["John", "Motorcycle", "Fox"]
-
-        or:
-
-            "John,Motorcycle,Fox"
-
-        Empty values are ignored.
-
-        Duplicate words are removed while preserving order.
-        """
         if words is None:
             return []
 
@@ -108,19 +87,6 @@ class Wind:
 
     @staticmethod
     def clean_date(values: Iterable[str] | None) -> list[str]:
-        """
-        Normalize numeric inputs and extract useful portions from dates.
-
-        Dates:
-
-            10/05/2000
-
-        Produces:
-
-            10 05 1005 2000 10052000
-
-        Generic numbers are preserved as-is.
-        """
         if not values:
             return []
 
@@ -154,11 +120,6 @@ class Wind:
     def _generate_numbers(
         self, custom_numbers: Iterable[str] | None = None
     ) -> Generator[str, None, None]:
-        """
-        Lazily generate numeric components.
-
-        No complete number collection is kept in memory.
-        """
         seen: set[str] = set()
 
         if custom_numbers:
@@ -203,12 +164,6 @@ class Wind:
             yield number
 
     def apply_leet(self, value: str) -> Generator[str, None, None]:
-        """
-        Lazily generate leetspeak variations.
-
-        Each character is processed independently.
-        """
-
         def generate(index: int, current: str) -> Generator[str, None, None]:
             if index >= len(value):
                 yield current
@@ -226,7 +181,6 @@ class Wind:
 
     @staticmethod
     def _case_variations(value: str, enabled: bool) -> Generator[str, None, None]:
-        """Lazily generate case variations."""
         yield value
 
         if not enabled:
@@ -237,24 +191,6 @@ class Wind:
 
     @classmethod
     def _parse_pattern(cls, pattern: str) -> list[tuple[str, str]]:
-        """
-        Parse a pattern into tokens.
-
-        Example:
-
-            "{word}{symbol}{word}{number}"
-
-        becomes:
-
-            [
-                ("component", "word"),
-                ("component", "symbol"),
-                ("component", "word"),
-                ("component", "number"),
-            ]
-
-        Literal text is preserved.
-        """
         tokens: list[tuple[str, str]] = []
 
         position = 0
@@ -281,15 +217,6 @@ class Wind:
     def _lazy_product(
         sources: list[Iterable[str]],
     ) -> Generator[tuple[str, ...], None, None]:
-        """
-        Lazily generate a Cartesian product.
-
-        Unlike itertools.product(), this implementation does not
-        consume generators into pools before generation starts.
-
-        This is important for Wind because numeric components can
-        contain very large ranges.
-        """
         if not sources:
             yield ()
             return
@@ -309,18 +236,6 @@ class Wind:
         custom_numbers: Iterable[str] | None,
         symbols: tuple[str, ...],
     ) -> list[Iterable[str]]:
-        """
-        Build lazy value sources for a pattern.
-
-        Every {word} receives the complete word source
-        independently.
-
-        Therefore:
-
-            {word}{word}
-
-        generates every possible pair of words.
-        """
         sources: list[Iterable[str]] = []
 
         for component in components:
@@ -338,7 +253,6 @@ class Wind:
     def generate(
         self, words: Iterable[str] | str, options: GenerationOptions
     ) -> Generator[str, None, None]:
-        """Lazily generate passwords based on configured patterns."""
         normalized_words = self.normalize_words(words)
 
         if not normalized_words:
@@ -397,12 +311,6 @@ class Wind:
 
     @staticmethod
     def _create_seen_database(path: str) -> sqlite3.Connection:
-        """
-        Create a temporary SQLite database for deduplication.
-
-        The database is stored on disk instead of keeping the
-        complete generated wordlist in RAM.
-        """
         connection = sqlite3.connect(path)
 
         connection.execute("""
@@ -421,11 +329,6 @@ class Wind:
         options: GenerationOptions,
         progress: ProgressCallback | None = None,
     ) -> GenerationResult:
-        """
-        Generate passwords and write them directly to disk.
-
-        The complete wordlist is never stored in memory.
-        """
         output_path = Path(options.output)
 
         output_path.parent.mkdir(parents=True, exist_ok=True)
