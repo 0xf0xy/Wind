@@ -92,7 +92,7 @@ def build_parser() -> argparse.ArgumentParser:
         "-v",
         "--version",
         action="version",
-        # version=f"Wind v{version('wind')}",
+        version=f"Wind v{version('wind')}",
         help="Show program version",
     )
 
@@ -116,7 +116,7 @@ def print_header(options: GenerationOptions) -> None:
     print("─" * 50)
 
     print("\nWordlist Settings")
-    print("─" * 50)
+    print("─" * 35)
     print(f"Max. length  : {options.max_length}")
     print(f"Special      : {'yes' if options.special else 'no'}")
     print(f"Leet         : {'yes' if options.leet else 'no'}")
@@ -126,11 +126,7 @@ def print_header(options: GenerationOptions) -> None:
 
 
 def print_progress(_, total: int) -> None:
-    print(
-        f"\rGenerated: {total:,}",
-        end="",
-        flush=True,
-    )
+    print(f"\rGenerated: {total:,}", end="", flush=True)
 
 
 def print_result(result) -> None:
