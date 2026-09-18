@@ -221,10 +221,10 @@ wind -h
 
 ## > Usage
 
-Provide the words that should be used during generation:
+Provide the words that should be used during generation and the options for generation:
 
 ```bash
-wind cat,flowers,codes -l -c -s
+wind <word,word...> [options]
 ```
 
 For available commands and options:
