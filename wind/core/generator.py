@@ -6,7 +6,7 @@ from collections.abc import Generator, Iterable
 from importlib.resources import files
 from pathlib import Path
 
-from .models import GenerationOptions, GenerationResult, ProgressCallback
+from wind.core.models import GenerationOptions, GenerationResult, ProgressCallback
 
 
 class Wind:

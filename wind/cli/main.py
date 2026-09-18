@@ -134,7 +134,7 @@ def print_result(result) -> None:
         print(f"{red('[x]')} " "No passwords generated. Please check your input data.")
         return
 
-    print(red("[✓] Wordlist generation complete!\n"))
+    print(red("[+] Wordlist generation complete!\n"))
 
     print(f"    Output file   : {red(result.output)}")
     print(f"    Words total   : {red(f'{result.generated:,}')}")
